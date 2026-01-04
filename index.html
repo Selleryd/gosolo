@@ -189,18 +189,66 @@
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
         
+        /* Mobile menu styles */
+        .mobile-menu-button {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(30px);
+            z-index: 2000;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
         /* Responsive nav */
         @media (max-width: 768px) {
             .nav-fixed {
                 width: 90%;
-                flex-direction: column;
-                padding: 1rem;
-                gap: 0.5rem;
+                padding: 1rem 1.5rem;
+                justify-content: space-between;
             }
-            .nav-fixed ul {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 0.5rem;
+            
+            .nav-fixed > ul {
+                display: none;
+            }
+            
+            .mobile-menu-button {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
+            
+            .mobile-menu-button span {
+                width: 24px;
+                height: 3px;
+                background: #667eea;
+                border-radius: 2px;
+                transition: all 0.3s ease;
+            }
+            
+            .mobile-menu-button.active span:nth-child(1) {
+                transform: rotate(45deg) translate(6px, 6px);
+            }
+            
+            .mobile-menu-button.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .mobile-menu-button.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(6px, -6px);
             }
         }
         
@@ -260,8 +308,29 @@
      <li><a href="#case-studies" class="text-gray-700 hover:text-purple-600 transition-colors">Case Studies</a></li>
      <li><a href="#faq" class="text-gray-700 hover:text-purple-600 transition-colors">FAQ</a></li>
      <li><a href="#pricing" class="text-purple-600 font-semibold hover:text-purple-700 transition-colors">Start Now</a></li>
+    </ul><button class="mobile-menu-button" id="mobileMenuButton" onclick="toggleMobileMenu()"> <span></span> <span></span> <span></span> </button>
+   </nav><!-- Mobile Menu -->
+   <div class="mobile-menu" id="mobileMenu">
+    <div class="flex items-center justify-between mb-8">
+     <div class="flex items-center">
+      <svg width="40" height="40" viewbox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><defs>
+        <lineargradient id="logoGradMobile" x1="0%" y1="0%" x2="100%" y2="100%">
+         <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+         <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+        </lineargradient>
+       </defs> <circle cx="20" cy="20" r="18" fill="url(#logoGradMobile)" /> <path d="M20 8 L28 15 L28 28 L20 28 L20 20 L12 20 L12 28 L12 15 Z" fill="white" opacity="0.9" /> <circle cx="16" cy="16" r="2" fill="white" />
+      </svg><span class="heading-font text-2xl font-bold text-gray-900 ml-2">GoSolo</span>
+     </div><button class="mobile-menu-button active" onclick="toggleMobileMenu()"> <span></span> <span></span> <span></span> </button>
+    </div>
+    <ul class="space-y-6 text-2xl font-semibold">
+     <li><a href="#home" class="block text-gray-700 hover:text-purple-600 transition-colors" onclick="toggleMobileMenu()">Home</a></li>
+     <li><a href="#pricing" class="block text-gray-700 hover:text-purple-600 transition-colors" onclick="toggleMobileMenu()">Pricing</a></li>
+     <li><a href="#calculator" class="block text-gray-700 hover:text-purple-600 transition-colors" onclick="toggleMobileMenu()">Calculator</a></li>
+     <li><a href="#case-studies" class="block text-gray-700 hover:text-purple-600 transition-colors" onclick="toggleMobileMenu()">Case Studies</a></li>
+     <li><a href="#faq" class="block text-gray-700 hover:text-purple-600 transition-colors" onclick="toggleMobileMenu()">FAQ</a></li>
+     <li class="pt-4"><a href="#pricing" class="block btn-primary text-white px-8 py-4 rounded-full text-center" onclick="toggleMobileMenu()">Start Now</a></li>
     </ul>
-   </nav><!-- Hero Section -->
+   </div><!-- Hero Section -->
    <section id="home" class="min-h-screen flex items-center justify-center px-6 pt-32 pb-20">
     <div class="container mx-auto max-w-7xl">
      <div class="grid md:grid-cols-2 gap-12 items-center"><!-- Left: Headline -->
@@ -881,6 +950,22 @@
             }
         }
 
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuButton = document.getElementById('mobileMenuButton');
+            
+            mobileMenu.classList.toggle('active');
+            menuButton.classList.toggle('active');
+            
+            // Prevent body scroll when menu is open
+            if (mobileMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+
         // Scroll effect for navigation
         let lastScroll = 0;
         const nav = document.getElementById('mainNav');
@@ -932,5 +1017,5 @@
             });
         }
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b872cb76387c93b',t:'MTc2NzQ5MjM2Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b876a24a063da36',t:'MTc2NzQ5NDg4Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
