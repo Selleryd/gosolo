@@ -1,634 +1,936 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoSolo Realty - Fire Your Realtor. Keep the Profit.</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GoSolo Realty - Fire Your Realtor. Keep the Profit.</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@700;800;900&display=swap');
+        
         * {
-            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .heading-font {
+            font-family: 'Outfit', sans-serif;
+        }
+        
+        /* Animated gradient background */
         .gradient-bg {
-            background: linear-gradient(135deg, #0d0b28 0%, #1a1838 100%);
+            background: linear-gradient(-45deg, #f8f9ff, #fef3f8, #f0f9ff, #fef8f0, #fff5f7);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
         }
         
-        .glassmorphism {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 50% 75%; }
+            50% { background-position: 100% 50%; }
+            75% { background-position: 50% 25%; }
+            100% { background-position: 0% 50%; }
         }
         
-        .glow-border {
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
-            border: 1px solid rgba(139, 92, 246, 0.5);
+        /* Glassmorphism styles */
+        .glass {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.12);
         }
         
-        .hover-glow:hover {
-            box-shadow: 0 0 30px rgba(139, 92, 246, 0.6);
-            transform: translateY(-2px);
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.65);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px 0 rgba(102, 126, 234, 0.15);
+            background: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Navigation fixed positioning */
+        .nav-fixed {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
             transition: all 0.3s ease;
         }
         
-        .nav-link {
+        .nav-scrolled {
+            top: 10px;
+            background: rgba(255, 255, 255, 0.4);
+        }
+        
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Button hover effects */
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            transition: all 0.3s ease;
+            overflow: hidden;
         }
         
-        .nav-link::after {
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 16px 32px rgba(102, 126, 234, 0.35);
+        }
+        
+        .btn-primary::before {
             content: '';
             position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 50%;
-            background: linear-gradient(90deg, #8b5cf6, #a855f7);
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-        }
-        
-        .nav-link:hover::after {
+            top: 0;
+            left: -100%;
             width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s;
         }
         
-        .animate-counter {
-            animation: countUp 2s ease-out;
+        .btn-primary:hover::before {
+            left: 100%;
         }
         
+        .btn-primary:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+        
+        /* Floating animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Calculator styles */
+        .calculator-result {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .savings-highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Card shimmer effect */
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        
+        .shimmer {
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0) 100%);
+            background-size: 1000px 100%;
+            animation: shimmer 3s infinite;
+        }
+        
+        /* Popular badge */
+        .popular-badge {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        /* Case study image hover */
+        .case-study-img {
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .case-study-card:hover .case-study-img {
+            transform: scale(1.05);
+        }
+        
+        /* FAQ accordion */
+        .faq-item {
+            transition: all 0.3s ease;
+        }
+        
+        .faq-answer {
+            display: none;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .faq-answer.active {
+            display: block;
+        }
+        
+        /* Input focus styles */
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        /* Responsive nav */
+        @media (max-width: 768px) {
+            .nav-fixed {
+                width: 90%;
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+            .nav-fixed ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+        }
+        
+        /* Number animation */
         @keyframes countUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        .accordion-content {
-            max-height: 0;
+        .count-animation {
+            animation: countUp 0.5s ease-out;
+        }
+        
+        /* Marquee animation */
+        .marquee-container {
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            position: relative;
         }
         
-        .accordion-content.active {
-            max-height: 200px;
+        .marquee-content {
+            display: flex;
+            animation: marquee 30s linear infinite;
         }
         
-        .floating-chat {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1000;
-            animation: float 3s ease-in-out infinite;
+        .marquee-item {
+            flex-shrink: 0;
         }
         
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
         
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.6s ease;
-        }
-        
-        .scroll-reveal.revealed {
-            opacity: 1;
-            transform: translateY(0);
+        .marquee-content:hover {
+            animation-play-state: paused;
         }
     </style>
-</head>
-<body class="gradient-bg text-white min-h-screen">
-    <!-- Sticky Navigation -->
-    <!-- Header -->
-<nav class="fixed top-0 w-full z-50 glassmorphism">
-    <div class="max-w-7xl mx-auto px-6 py-4">
-        <div class="flex justify-between items-center">
-            <!-- Clickable Logo -->
-            <div class="text-2xl font-bold">
-                <a href="https://gosolorealty.com" class="text-white hover:text-purple-300 transition-colors duration-200">
-                    <span class="text-purple-400">GoSolo</span> Realty
-                </a>
-            </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#home" class="nav-link hover:text-purple-400">Home</a>
-                    <a href="#pricing" class="nav-link hover:text-purple-400">Pricing</a>
-                    <a href="#calculator" class="nav-link hover:text-purple-400">Calculator</a>
-                    <a href="#case-studies" class="nav-link hover:text-purple-400">Case Studies</a>
-                    <a href="#faq" class="nav-link hover:text-purple-400">FAQ</a>
-                    <a href="#start" class="nav-link hover:text-purple-400">Start Now</a>
-                </div>
-                <button class="md:hidden text-white">
-                    <i class="fas fa-bars text-xl"></i>
-                </button>
-            </div>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full gradient-bg">
+  <div class="w-full h-full overflow-auto"><!-- Glassmorphic Navigation -->
+   <nav class="nav-fixed glass rounded-full px-8 py-4 flex items-center space-x-8" id="mainNav">
+    <div class="flex items-center">
+     <svg width="40" height="40" viewbox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><defs>
+       <lineargradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+       </lineargradient>
+      </defs> <circle cx="20" cy="20" r="18" fill="url(#logoGrad)" /> <path d="M20 8 L28 15 L28 28 L20 28 L20 20 L12 20 L12 28 L12 15 Z" fill="white" opacity="0.9" /> <circle cx="16" cy="16" r="2" fill="white" />
+     </svg><span class="heading-font text-xl font-bold text-gray-900 ml-2">GoSolo</span>
+    </div>
+    <ul class="flex space-x-8 text-sm font-medium">
+     <li><a href="#home" class="text-gray-700 hover:text-purple-600 transition-colors">Home</a></li>
+     <li><a href="#pricing" class="text-gray-700 hover:text-purple-600 transition-colors">Pricing</a></li>
+     <li><a href="#calculator" class="text-gray-700 hover:text-purple-600 transition-colors">Calculator</a></li>
+     <li><a href="#case-studies" class="text-gray-700 hover:text-purple-600 transition-colors">Case Studies</a></li>
+     <li><a href="#faq" class="text-gray-700 hover:text-purple-600 transition-colors">FAQ</a></li>
+     <li><a href="#pricing" class="text-purple-600 font-semibold hover:text-purple-700 transition-colors">Start Now</a></li>
+    </ul>
+   </nav><!-- Hero Section -->
+   <section id="home" class="min-h-screen flex items-center justify-center px-6 pt-32 pb-20">
+    <div class="container mx-auto max-w-7xl">
+     <div class="grid md:grid-cols-2 gap-12 items-center"><!-- Left: Headline -->
+      <div class="space-y-6 floating">
+       <h1 class="heading-font text-6xl md:text-7xl font-black text-gray-900 leading-tight" id="heroHeadline">Fire Your Realtor.</h1>
+       <h2 class="heading-font text-5xl md:text-6xl font-black text-gray-800" id="heroSubheadline">Keep the Profit.</h2>
+       <p class="text-xl text-gray-600 leading-relaxed max-w-xl" id="heroDescription">Why the Tools Agents Use Matter More Than the Agents Themselves.</p>
+       <div class="flex space-x-4 pt-4"><a href="#pricing" class="btn-primary text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg"> Get Started </a> <a href="#calculator" class="glass px-8 py-4 rounded-full font-semibold text-lg text-gray-700 hover:bg-white/40 transition-all"> Calculate Savings </a>
+       </div>
+      </div><!-- Right: Calculator -->
+      <div class="glass-card rounded-3xl p-8 space-y-6" id="calculator">
+       <h3 class="text-2xl font-bold text-gray-900">Calculate Your Savings</h3>
+       <div><label class="block text-sm font-medium text-gray-700 mb-2">Home Sale Price</label>
+        <div class="relative"><span class="absolute left-4 top-4 text-gray-500 text-lg">$</span> <input type="number" id="homePriceInput" placeholder="500000" class="w-full pl-8 pr-4 py-4 rounded-xl border-2 border-gray-200 text-lg font-semibold transition-all" value="500000">
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="pt-24 pb-16">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid lg:grid-cols-5 gap-12 items-center">
-                <!-- Left Content (60%) -->
-                <div class="lg:col-span-3 space-y-8">
-                    <h1 class="text-5xl lg:text-7xl font-black leading-tight">
-                        Fire Your Realtor.<br>
-                        <span class="text-purple-400">Keep the Profit.</span>
-                    </h1>
-                    <p class="text-xl lg:text-2xl text-gray-300 leading-relaxed">
-                        Why the Tools Agents Use Matter More Than the Agents Themselves.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="https://link.fastpaydirect.com/payment-link/68372b070263ae1d3777ccca" 
-                           class="bg-purple-600 hover:bg-purple-700 px-8 py-4 rounded-lg font-bold text-lg hover-glow transition-all duration-300 text-center">
-                            List for $997
-                        </a>
-                        <a href="https://link.fastpaydirect.com/payment-link/68372c100a5741d11652194a" 
-                           class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 px-8 py-4 rounded-lg font-bold text-lg hover-glow transition-all duration-300 text-center">
-                            Go Premium for $1,250
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Right Calculator (40%) -->
-                <div id="calculator" class="lg:col-span-2">
-                    <div class="glassmorphism glow-border rounded-2xl p-8">
-                        <h3 class="text-2xl font-bold mb-6 text-center">
-                            <i class="fas fa-calculator text-purple-400 mr-2"></i>
-                            Savings Calculator
-                        </h3>
-                        <div class="space-y-6">
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Enter your home's expected sale price</label>
-                                <input type="number" id="homePrice" placeholder="$500,000" 
-                                       class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-purple-400">
-                            </div>
-                            <div class="space-y-4">
-                                <div class="bg-red-500/20 border border-red-500/30 rounded-lg p-4">
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-red-300">Traditional 6% Commission</span>
-                                        <span id="traditionalCost" class="text-red-400 font-bold text-xl">$30,000</span>
-                                    </div>
-                                </div>
-                                <div class="bg-purple-500/20 border border-purple-500/30 rounded-lg p-4">
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-purple-300">GoSolo Silver ($997)</span>
-                                        <span class="text-purple-400 font-bold text-xl">$997</span>
-                                    </div>
-                                </div>
-                                <div class="bg-green-500/20 border border-green-500/30 rounded-lg p-4">
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-green-300">Your Savings</span>
-                                        <span id="savings" class="text-green-400 font-bold text-2xl animate-counter">$29,003</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+       </div>
+       <div class="space-y-4 pt-4 calculator-result">
+        <div class="glass rounded-xl p-5">
+         <div class="text-sm text-gray-600 mb-1">
+          Traditional 6% Commission
+         </div>
+         <div class="text-3xl font-bold text-red-600" id="traditionalCommission">
+          $30,000
+         </div>
         </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section id="pricing" class="py-20">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl lg:text-5xl font-bold mb-4">Choose Your Package</h2>
-                <p class="text-xl text-gray-300">Professional MLS listing without the hefty commission</p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- Silver Package -->
-                <div class="glassmorphism glow-border rounded-2xl p-8 hover-glow transition-all duration-300">
-                    <div class="text-center mb-8">
-                        <h3 class="text-3xl font-bold mb-2">Silver Package</h3>
-                        <div class="text-5xl font-black text-purple-400 mb-2">$997</div>
-                        <p class="text-gray-300">72-hour MLS listing turnaround</p>
-                    </div>
-                    
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center">
-                            <i class="fas fa-check text-green-400 mr-3"></i>
-                            MLS listing for 6 months
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-share-alt text-green-400 mr-3"></i>
-                            Syndication to 500+ platforms
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-images text-green-400 mr-3"></i>
-                            Upload up to 25 photos
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-edit text-green-400 mr-3"></i>
-                            One edit within 30 days
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-envelope text-green-400 mr-3"></i>
-                            Email support
-                        </li>
-                    </ul>
-                    
-                    <a href="https://link.fastpaydirect.com/payment-link/68372b070263ae1d3777ccca" 
-                       class="block w-full bg-purple-600 hover:bg-purple-700 py-4 rounded-lg font-bold text-center hover-glow transition-all duration-300">
-                        Get Started - $997
-                    </a>
-                </div>
-
-                <!-- Gold Package -->
-                <div class="glassmorphism glow-border rounded-2xl p-8 hover-glow transition-all duration-300 relative">
-                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                        <span class="bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-4 py-2 rounded-full text-sm font-bold">
-                            Most Popular
-                        </span>
-                    </div>
-                    
-                    <div class="text-center mb-8">
-                        <h3 class="text-3xl font-bold mb-2">Gold Package</h3>
-                        <div class="text-5xl font-black text-gradient bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent mb-2">$1,250</div>
-                        <p class="text-gray-300">24-hour turnaround</p>
-                    </div>
-                    
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center">
-                            <i class="fas fa-crown text-yellow-400 mr-3"></i>
-                            Everything in Silver
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-infinity text-green-400 mr-3"></i>
-                            Unlimited listing edits
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-sign text-green-400 mr-3"></i>
-                            Custom yard sign shipped
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-bell text-green-400 mr-3"></i>
-                            Lead forwarding via email/text
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-file-contract text-green-400 mr-3"></i>
-                            Buyer offer sheet template
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-handshake text-green-400 mr-3"></i>
-                            FSBO contract templates
-                        </li>
-                    </ul>
-                    
-                    <a href="https://link.fastpaydirect.com/payment-link/68372c100a5741d11652194a" 
-                       class="block w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 py-4 rounded-lg font-bold text-center hover-glow transition-all duration-300 text-black">
-                        Go Premium - $1,250
-                    </a>
-                </div>
-            </div>
+        <div class="glass rounded-xl p-5 bg-purple-50/30">
+         <div class="text-sm text-gray-600 mb-1">
+          GoSolo Silver ($997)
+         </div>
+         <div class="text-3xl font-bold text-purple-600">
+          $997
+         </div>
         </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="py-20">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl lg:text-5xl font-bold mb-4">
-                    <i class="fas fa-star text-yellow-400 mr-2"></i>
-                    Rated 5 Stars by Over 1,000 FSBO Sellers
-                </h2>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="glassmorphism glow-border rounded-2xl p-6 scroll-reveal">
-                    <div class="flex mb-4">
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                    </div>
-                    <p class="text-gray-300 mb-4">"Saved $24,000 in commission and sold in just 8 days after getting on MLS. GoSolo made it so simple!"</p>
-                    <div class="flex items-center">
-                        <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mr-3">
-                            <i class="fas fa-user text-white"></i>
-                        </div>
-                        <div>
-                            <div class="font-bold">Sarah M.</div>
-                            <div class="text-sm text-gray-400">NY</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="glassmorphism glow-border rounded-2xl p-6 scroll-reveal">
-                    <div class="flex mb-4">
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                    </div>
-                    <p class="text-gray-300 mb-4">"The MLS exposure was incredible. We had 12 showings in the first weekend and multiple offers!"</p>
-                    <div class="flex items-center">
-                        <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mr-3">
-                            <i class="fas fa-user text-white"></i>
-                        </div>
-                        <div>
-                            <div class="font-bold">Mike & Lisa K.</div>
-                            <div class="text-sm text-gray-400">NY</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="glassmorphism glow-border rounded-2xl p-6 scroll-reveal">
-                    <div class="flex mb-4">
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                    </div>
-                    <p class="text-gray-300 mb-4">"Professional service without the hefty price tag. The Gold package templates made everything seamless."</p>
-                    <div class="flex items-center">
-                        <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mr-3">
-                            <i class="fas fa-user text-white"></i>
-                        </div>
-                        <div>
-                            <div class="font-bold">Jennifer R.</div>
-                            <div class="text-sm text-gray-400">NY</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="glass rounded-xl p-5 bg-gradient-to-r from-purple-50/40 to-pink-50/40">
+         <div class="text-sm text-gray-600 mb-1">
+          Your Savings
+         </div>
+         <div class="text-4xl font-black savings-highlight count-animation" id="savingsAmount">
+          $29,003
+         </div>
         </div>
-    </section>
-
-    <!-- Case Studies Section -->
-    <section id="case-studies" class="py-20">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl lg:text-5xl font-bold mb-4">Success Stories</h2>
-                <p class="text-xl text-gray-300">Real results from real FSBO sellers</p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="glassmorphism glow-border rounded-2xl p-8 scroll-reveal">
-                    <div class="flex items-center mb-6">
-                        <i class="fas fa-chart-line text-green-400 text-3xl mr-4"></i>
-                        <h3 class="text-2xl font-bold">$36,000 Saved – Sold in 6 Days</h3>
-                    </div>
-                    <p class="text-gray-300 mb-6">After 3 months with no agent success, this homeowner listed with GoSolo and received 5 offers within a week of MLS exposure.</p>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-red-500/20 border border-red-500/30 rounded-lg p-4 text-center">
-                            <div class="text-red-400 font-bold">Before MLS</div>
-                            <div class="text-2xl font-black">0 Offers</div>
-                        </div>
-                        <div class="bg-green-500/20 border border-green-500/30 rounded-lg p-4 text-center">
-                            <div class="text-green-400 font-bold">After MLS</div>
-                            <div class="text-2xl font-black">5 Offers</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="glassmorphism glow-border rounded-2xl p-8 scroll-reveal">
-                    <div class="flex items-center mb-6">
-                        <i class="fas fa-home text-purple-400 text-3xl mr-4"></i>
-                        <h3 class="text-2xl font-bold">From Zero Visibility to 8 Offers</h3>
-                    </div>
-                    <p class="text-gray-300 mb-6">This seller tried Facebook Marketplace and Craigslist for 2 months. Within 10 days of MLS listing, they had 8 qualified offers.</p>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-red-500/20 border border-red-500/30 rounded-lg p-4 text-center">
-                            <div class="text-red-400 font-bold">DIY Marketing</div>
-                            <div class="text-2xl font-black">2 Months</div>
-                        </div>
-                        <div class="bg-green-500/20 border border-green-500/30 rounded-lg p-4 text-center">
-                            <div class="text-green-400 font-bold">MLS Results</div>
-                            <div class="text-2xl font-black">10 Days</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+       </div><button onclick="document.getElementById('pricing').scrollIntoView({behavior: 'smooth'})" class="btn-primary w-full text-white py-4 rounded-xl font-semibold text-lg"> Start Saving Now </button>
+      </div>
+     </div>
+    </div>
+   </section><!-- Logo Marquee Section -->
+   <section class="py-12 px-6 overflow-hidden">
+    <div class="container mx-auto max-w-7xl">
+     <p class="text-center text-sm font-semibold text-gray-500 mb-8 tracking-wider uppercase">Your Listing Syndicates to 500+ Platforms Including</p>
+     <div class="relative">
+      <div class="marquee-container">
+       <div class="marquee-content">
+        <div class="marquee-item glass px-8 py-4 rounded-2xl mx-3"><span class="text-2xl font-bold text-purple-600">Zillow</span>
         </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section id="faq" class="py-20">
-        <div class="max-w-4xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl lg:text-5xl font-bold mb-4">Frequently Asked Questions</h2>
-            </div>
-            
-            <div class="space-y-4">
-                <div class="glassmorphism glow-border rounded-lg">
-                    <button class="w-full p-6 text-left flex justify-between items-center accordion-trigger" onclick="toggleAccordion(this)">
-                        <span class="font-bold text-lg">
-                            <i class="fas fa-question-circle text-purple-400 mr-3"></i>
-                            What exactly do I get with GoSolo?
-                        </span>
-                        <i class="fas fa-plus accordion-icon transition-transform duration-300"></i>
-                    </button>
-                    <div class="accordion-content px-6 pb-6">
-                        <p class="text-gray-300">You get professional MLS listing services that put your home in front of thousands of buyers and agents. This includes syndication to major platforms like Zillow, Realtor.com, and Redfin, plus all the tools you need to manage offers and close the sale.</p>
-                    </div>
-                </div>
-                
-                <div class="glassmorphism glow-border rounded-lg">
-                    <button class="w-full p-6 text-left flex justify-between items-center accordion-trigger" onclick="toggleAccordion(this)">
-                        <span class="font-bold text-lg">
-                            <i class="fas fa-question-circle text-purple-400 mr-3"></i>
-                            How is this different from hiring a traditional agent?
-                        </span>
-                        <i class="fas fa-plus accordion-icon transition-transform duration-300"></i>
-                    </button>
-                    <div class="accordion-content px-6 pb-6">
-                        <p class="text-gray-300">Traditional agents charge 6% commission (typically $30,000+ on a $500k home) for services you can handle yourself with the right tools. We give you access to the same MLS system agents use, for a flat fee of $997-$1,250.</p>
-                    </div>
-                </div>
-                
-                <div class="glassmorphism glow-border rounded-lg">
-                    <button class="w-full p-6 text-left flex justify-between items-center accordion-trigger" onclick="toggleAccordion(this)">
-                        <span class="font-bold text-lg">
-                            <i class="fas fa-question-circle text-purple-400 mr-3"></i>
-                            Will my listing appear on Zillow and other major sites?
-                        </span>
-                        <i class="fas fa-plus accordion-icon transition-transform duration-300"></i>
-                    </button>
-                    <div class="accordion-content px-6 pb-6">
-                        <p class="text-gray-300">Yes! MLS listings automatically syndicate to 500+ platforms including Zillow, Realtor.com, Redfin, Homes.com, and many others. This gives you the same exposure as any agent-listed property.</p>
-                    </div>
-                </div>
-                
-                <div class="glassmorphism glow-border rounded-lg">
-                    <button class="w-full p-6 text-left flex justify-between items-center accordion-trigger" onclick="toggleAccordion(this)">
-                        <span class="font-bold text-lg">
-                            <i class="fas fa-question-circle text-purple-400 mr-3"></i>
-                            What if I need help during the process?
-                        </span>
-                        <i class="fas fa-plus accordion-icon transition-transform duration-300"></i>
-                    </button>
-                    <div class="accordion-content px-6 pb-6">
-                        <p class="text-gray-300">Our Gold package includes comprehensive support with contract templates, offer management, and direct access to our team. We're here to guide you through every step of the process.</p>
-                    </div>
-                </div>
-            </div>
+        <div class="marquee-item glass px-8 py-4 rounded-2xl mx-3"><span class="text-2xl font-bold text-red-600">Realtor.com</span>
         </div>
-    </section>
-
-    <!-- Final CTA Section -->
-    <section id="start" class="py-20">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <div class="glassmorphism glow-border rounded-2xl p-12">
-                <h2 class="text-4xl lg:text-5xl font-bold mb-6">
-                    Ready to List Like a Pro—Without Paying Like One?
-                </h2>
-                <p class="text-xl text-gray-300 mb-8">Join thousands of smart sellers who kept their commission</p>
-                
-                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-                    <a href="https://link.fastpaydirect.com/payment-link/68372b070263ae1d3777ccca" 
-                       class="bg-purple-600 hover:bg-purple-700 px-8 py-4 rounded-lg font-bold text-lg hover-glow transition-all duration-300">
-                        Get Started for $997
-                    </a>
-                    <a href="https://link.fastpaydirect.com/payment-link/68372c100a5741d11652194a" 
-                       class="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 px-8 py-4 rounded-lg font-bold text-lg hover-glow transition-all duration-300 text-black">
-                        Go Premium for $1,250
-                    </a>
-                </div>
-                
-                <a href="#" class="text-purple-400 hover:text-purple-300 font-medium">
-                    <i class="fas fa-calendar-alt mr-2"></i>
-                    Schedule Free 10-Minute Call
-                </a>
-            </div>
+        <div class="marquee-item glass px-8 py-4 rounded-2xl mx-3"><span class="text-2xl font-bold text-green-600">Trulia</span>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-12 border-t border-white/10">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="grid md:grid-cols-4 gap-8">
-                <div>
-                    <div class="text-2xl font-bold mb-4">
-                        <span class="text-purple-400">GoSolo</span> Realty
-                    </div>
-                    <p class="text-gray-400">Empowering homeowners to sell smart and keep their profits.</p>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4">Services</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white">MLS Listing</a></li>
-                        <li><a href="#" class="hover:text-white">FSBO Support</a></li>
-                        <li><a href="#" class="hover:text-white">Contract Templates</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4">Company</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white">About Us</a></li>
-                        <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-white">Terms of Service</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4">Connect</h4>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-facebook text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-twitter text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-linkedin text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-instagram text-xl"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="border-t border-white/10 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2025 GoSolo Realty. All rights reserved.</p>
-            </div>
+        <div class="marquee-item glass px-8 py-4 rounded-2xl mx-3"><span class="text-2xl font-bold text-blue-600">Redfin</span>
         </div>
-    </footer>
+        <div class="marquee-item glass px-8 py-4 rounded-2xl mx-3"><span class="text-2xl font-bold text-orange-600">Homes.com</span>
+        </div>
+        <div class="marquee-item glass px-8 py-4 rounded-2xl mx-3"><span class="text-2xl font-bold text-indigo-600">Homesnap</span>
+        </div><!-- Duplicate for seamless loop -->
+        <div class="marquee-item glass px-8 py-4 rounded-2xl mx-3"><span class="text-2xl font-bold text-purple-600">Zillow</span>
+        </div>
+        <div class="marquee-item glass px-8 py-4 rounded-2xl mx-3"><span class="text-2xl font-bold text-red-600">Realtor.com</span>
+        </div>
+        <div class="marquee-item glass px-8 py-4 rounded-2xl mx-3"><span class="text-2xl font-bold text-green-600">Trulia</span>
+        </div>
+        <div class="marquee-item glass px-8 py-4 rounded-2xl mx-3"><span class="text-2xl font-bold text-blue-600">Redfin</span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Stats Section -->
+   <section class="py-20 px-6">
+    <div class="container mx-auto max-w-7xl">
+     <div class="grid md:grid-cols-4 gap-8">
+      <div class="glass-card rounded-3xl p-8 text-center">
+       <div class="text-5xl font-black text-purple-600 mb-3">
+        $24K
+       </div>
+       <div class="text-gray-700 font-semibold">
+        Average Savings
+       </div>
+      </div>
+      <div class="glass-card rounded-3xl p-8 text-center">
+       <div class="text-5xl font-black text-purple-600 mb-3">
+        500+
+       </div>
+       <div class="text-gray-700 font-semibold">
+        Listing Platforms
+       </div>
+      </div>
+      <div class="glass-card rounded-3xl p-8 text-center">
+       <div class="text-5xl font-black text-purple-600 mb-3">
+        24hr
+       </div>
+       <div class="text-gray-700 font-semibold">
+        MLS Turnaround
+       </div>
+      </div>
+      <div class="glass-card rounded-3xl p-8 text-center">
+       <div class="text-5xl font-black text-purple-600 mb-3">
+        5,000+
+       </div>
+       <div class="text-gray-700 font-semibold">
+        Homes Sold
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- About Section - Mission -->
+   <section class="py-20 px-6">
+    <div class="container mx-auto max-w-7xl">
+     <div class="grid md:grid-cols-2 gap-16 items-center">
+      <div class="space-y-6">
+       <div class="inline-block glass px-4 py-2 rounded-full text-sm font-semibold text-purple-600 mb-4">
+        Our Mission
+       </div>
+       <h2 class="heading-font text-5xl md:text-6xl font-black text-gray-900" id="aboutTitle">Democratizing Real Estate</h2>
+       <p class="text-xl text-gray-700 leading-relaxed">We built GoSolo Realty because we were tired of watching hardworking homeowners hand over tens of thousands of dollars in unnecessary commissions.</p>
+       <p class="text-lg text-gray-600 leading-relaxed">The traditional real estate model is broken—agents charge 6% not because they deserve it, but because they can. Here's the truth: <strong>The tools agents use are more valuable than the agents themselves.</strong></p>
+       <div class="flex items-center space-x-4 pt-4">
+        <div class="w-16 h-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full"></div><span class="text-sm font-semibold text-gray-500">Est. 2021</span>
+       </div>
+      </div>
+      <div class="relative">
+       <div class="glass-card rounded-3xl p-12 floating">
+        <svg viewbox="0 0 400 400" class="w-full h-auto"><defs>
+          <lineargradient id="buildingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+           <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+           <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+          </lineargradient>
+         </defs> <!-- Modern building illustration --> <rect x="50" y="80" width="100" height="280" rx="8" fill="url(#buildingGrad)" opacity="0.8" /> <rect x="170" y="120" width="80" height="240" rx="8" fill="url(#buildingGrad)" opacity="0.6" /> <rect x="270" y="150" width="80" height="210" rx="8" fill="url(#buildingGrad)" opacity="0.9" /> <!-- Windows --> <rect x="65" y="100" width="20" height="25" rx="2" fill="white" opacity="0.3" /> <rect x="100" y="100" width="20" height="25" rx="2" fill="white" opacity="0.3" /> <rect x="65" y="140" width="20" height="25" rx="2" fill="white" opacity="0.3" /> <rect x="100" y="140" width="20" height="25" rx="2" fill="white" opacity="0.3" /> <rect x="185" y="140" width="15" height="20" rx="2" fill="white" opacity="0.3" /> <rect x="215" y="140" width="15" height="20" rx="2" fill="white" opacity="0.3" /> <rect x="285" y="170" width="15" height="20" rx="2" fill="white" opacity="0.3" /> <rect x="315" y="170" width="15" height="20" rx="2" fill="white" opacity="0.3" /> <!-- Ground --> <ellipse cx="200" cy="370" rx="180" ry="15" fill="rgba(102,126,234,0.2)" />
+        </svg>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- How It Works Section -->
+   <section class="py-20 px-6 bg-gradient-to-br from-purple-50/30 to-pink-50/30">
+    <div class="container mx-auto max-w-7xl">
+     <div class="text-center mb-16">
+      <h2 class="heading-font text-5xl font-black text-gray-900 mb-4">How GoSolo Works</h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">Get professional MLS listing in three simple steps</p>
+     </div>
+     <div class="grid md:grid-cols-3 gap-8">
+      <div class="glass-card rounded-3xl p-8 space-y-6 relative overflow-hidden">
+       <div class="absolute top-0 right-0 text-9xl font-black text-purple-100 opacity-50">
+        1
+       </div>
+       <div class="relative z-10">
+        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mb-6">
+         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+         </svg>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-900 mb-3">Choose Your Package</h3>
+        <p class="text-gray-600 leading-relaxed">Select Silver for essential MLS listing or Gold for premium features including unlimited edits and custom yard signs.</p>
+       </div>
+      </div>
+      <div class="glass-card rounded-3xl p-8 space-y-6 relative overflow-hidden">
+       <div class="absolute top-0 right-0 text-9xl font-black text-purple-100 opacity-50">
+        2
+       </div>
+       <div class="relative z-10">
+        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mb-6">
+         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+         </svg>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-900 mb-3">Submit Your Details</h3>
+        <p class="text-gray-600 leading-relaxed">Upload photos, property details, and pricing. Our team reviews everything to ensure MLS compliance.</p>
+       </div>
+      </div>
+      <div class="glass-card rounded-3xl p-8 space-y-6 relative overflow-hidden">
+       <div class="absolute top-0 right-0 text-9xl font-black text-purple-100 opacity-50">
+        3
+       </div>
+       <div class="relative z-10">
+        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mb-6">
+         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+         </svg>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-900 mb-3">Go Live &amp; Start Showing</h3>
+        <p class="text-gray-600 leading-relaxed">Your listing goes live on MLS and syndicates to 500+ platforms. Buyers and agents contact you directly.</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- The Problem Section -->
+   <section class="py-20 px-6">
+    <div class="container mx-auto max-w-7xl">
+     <div class="grid md:grid-cols-2 gap-16 items-center">
+      <div class="relative order-2 md:order-1">
+       <div class="glass-card rounded-3xl p-12">
+        <svg viewbox="0 0 400 400" class="w-full h-auto"><defs>
+          <lineargradient id="chartGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+           <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+           <stop offset="100%" style="stop-color:#dc2626;stop-opacity:1" />
+          </lineargradient>
+         </defs> <!-- Commission chart --> <rect x="50" y="250" width="80" height="100" rx="8" fill="url(#chartGrad)" opacity="0.8" /> <text x="90" y="370" text-anchor="middle" class="text-sm" fill="#666">
+          $30K
+         </text> <text x="90" y="390" text-anchor="middle" class="text-xs" fill="#999">
+          Traditional
+         </text> <rect x="160" y="320" width="80" height="30" rx="8" fill="#667eea" opacity="0.8" /> <text x="200" y="370" text-anchor="middle" class="text-sm" fill="#666">
+          $997
+         </text> <text x="200" y="390" text-anchor="middle" class="text-xs" fill="#999">
+          GoSolo
+         </text> <rect x="270" y="100" width="80" height="250" rx="8" fill="#10b981" opacity="0.8" /> <text x="310" y="370" text-anchor="middle" class="text-sm" fill="#666">
+          $29K
+         </text> <text x="310" y="390" text-anchor="middle" class="text-xs" fill="#999">
+          Your Savings
+         </text>
+        </svg>
+       </div>
+      </div>
+      <div class="space-y-6 order-1 md:order-2">
+       <div class="inline-block glass px-4 py-2 rounded-full text-sm font-semibold text-red-600 mb-4">
+        The Problem
+       </div>
+       <h2 class="heading-font text-5xl md:text-6xl font-black text-gray-900">6% Commissions Are Robbery</h2>
+       <div class="space-y-4 text-lg text-gray-700 leading-relaxed">
+        <p>On a $500,000 home sale, traditional agents take <strong class="text-red-600">$30,000</strong> in commissions. That's a new car. A year of mortgage payments. Your child's college fund.</p>
+        <p>What do you get for that $30,000? Access to the MLS, some photos, and a few showings. The same tools we give you for $997-$1,250.</p>
+       </div>
+       <div class="glass rounded-2xl p-6 border-l-4 border-red-500">
+        <p class="text-2xl font-bold text-gray-900">"The average American will pay $60,000+ in real estate commissions over their lifetime."</p>
+        <p class="text-sm text-gray-600 mt-2">— National Association of Realtors, 2023</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Tools Section -->
+   <section class="py-20 px-6 bg-gradient-to-br from-blue-50/30 to-purple-50/30">
+    <div class="container mx-auto max-w-7xl">
+     <div class="text-center mb-16">
+      <h2 class="heading-font text-5xl font-black text-gray-900 mb-4">Professional Tools, Direct Access</h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">Everything agents use, now in your hands</p>
+     </div>
+     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="glass-card rounded-2xl p-6 space-y-4">
+       <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+        </svg>
+       </div>
+       <h3 class="text-xl font-bold text-gray-900">MLS Database Access</h3>
+       <p class="text-gray-600">Direct listing to the Multiple Listing Service used by all agents.</p>
+      </div>
+      <div class="glass-card rounded-2xl p-6 space-y-4">
+       <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+        </svg>
+       </div>
+       <h3 class="text-xl font-bold text-gray-900">500+ Platform Syndication</h3>
+       <p class="text-gray-600">Automatic syndication to Zillow, Realtor.com, Trulia, and more.</p>
+      </div>
+      <div class="glass-card rounded-2xl p-6 space-y-4">
+       <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+       </div>
+       <h3 class="text-xl font-bold text-gray-900">Legal Contract Templates</h3>
+       <p class="text-gray-600">State-compliant FSBO contracts and buyer offer sheets.</p>
+      </div>
+      <div class="glass-card rounded-2xl p-6 space-y-4">
+       <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+       </div>
+       <h3 class="text-xl font-bold text-gray-900">Lead Management</h3>
+       <p class="text-gray-600">Email and text forwarding for all buyer inquiries.</p>
+      </div>
+      <div class="glass-card rounded-2xl p-6 space-y-4">
+       <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+       </div>
+       <h3 class="text-xl font-bold text-gray-900">Professional Photography</h3>
+       <p class="text-gray-600">Upload up to 25 high-quality photos to showcase your home.</p>
+      </div>
+      <div class="glass-card rounded-2xl p-6 space-y-4">
+       <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+       </div>
+       <h3 class="text-xl font-bold text-gray-900">Dedicated Support</h3>
+       <p class="text-gray-600">Email support throughout your entire listing period.</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Pricing Section -->
+   <section id="pricing" class="py-20 px-6">
+    <div class="container mx-auto max-w-7xl">
+     <h2 class="heading-font text-5xl font-black text-gray-900 text-center mb-4">Simple, Transparent Pricing</h2>
+     <p class="text-xl text-gray-600 text-center mb-16 max-w-2xl mx-auto">Choose the package that fits your needs. Both save you thousands compared to traditional agents.</p>
+     <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto"><!-- Silver Package -->
+      <div class="glass-card rounded-3xl p-8 space-y-6">
+       <div>
+        <h3 class="text-3xl font-bold text-gray-900 mb-2" id="silverTitle">Silver Package</h3>
+        <div class="flex items-baseline"><span class="text-5xl font-black text-gray-900">$997</span>
+        </div>
+       </div>
+       <ul class="space-y-4">
+        <li class="flex items-start">
+         <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+         </svg><span class="text-gray-700"><strong>72-hour MLS listing turnaround</strong></span></li>
+        <li class="flex items-start">
+         <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+         </svg><span class="text-gray-700">MLS listing for 6 months</span></li>
+        <li class="flex items-start">
+         <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+         </svg><span class="text-gray-700">Syndication to 500+ platforms</span></li>
+        <li class="flex items-start">
+         <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+         </svg><span class="text-gray-700">Upload up to 25 photos</span></li>
+        <li class="flex items-start">
+         <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+         </svg><span class="text-gray-700">One edit within 30 days</span></li>
+        <li class="flex items-start">
+         <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+         </svg><span class="text-gray-700">Email support</span></li>
+       </ul><a href="https://link.fastpaydirect.com/payment-link/68372b070263ae1d3777ccca" target="_blank" rel="noopener noreferrer" class="block w-full text-center btn-primary text-white py-4 rounded-xl font-semibold text-lg"> Get Started - $997 </a>
+      </div><!-- Gold Package -->
+      <div class="glass-card rounded-3xl p-8 space-y-6 relative border-2 border-purple-300">
+       <div class="absolute -top-4 left-1/2 transform -translate-x-1/2"><span class="popular-badge text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg"> Most Popular </span>
+       </div>
+       <div>
+        <h3 class="text-3xl font-bold text-gray-900 mb-2" id="goldTitle">Gold Package</h3>
+        <div class="flex items-baseline"><span class="text-5xl font-black text-gray-900">$1,250</span>
+        </div>
+       </div>
+       <ul class="space-y-4">
+        <li class="flex items-start">
+         <svg class="w-6 h-6 text-purple-600 mr-3 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+         </svg><span class="text-gray-700"><strong>24-hour turnaround</strong></span></li>
+        <li class="flex items-start">
+         <svg class="w-6 h-6 text-purple-600 mr-3 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+         </svg><span class="text-gray-700">Everything in Silver</span></li>
+        <li class="flex items-start">
+         <svg class="w-6 h-6 text-purple-600 mr-3 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+         </svg><span class="text-gray-700"><strong>Unlimited listing edits</strong></span></li>
+        <li class="flex items-start">
+         <svg class="w-6 h-6 text-purple-600 mr-3 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+         </svg><span class="text-gray-700">Custom yard sign shipped</span></li>
+        <li class="flex items-start">
+         <svg class="w-6 h-6 text-purple-600 mr-3 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+         </svg><span class="text-gray-700">Lead forwarding via email/text</span></li>
+        <li class="flex items-start">
+         <svg class="w-6 h-6 text-purple-600 mr-3 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+         </svg><span class="text-gray-700">Buyer offer sheet template</span></li>
+        <li class="flex items-start">
+         <svg class="w-6 h-6 text-purple-600 mr-3 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+         </svg><span class="text-gray-700">FSBO contract templates</span></li>
+       </ul><a href="https://link.fastpaydirect.com/payment-link/68372c100a5741d11652194a" target="_blank" rel="noopener noreferrer" class="block w-full text-center btn-primary text-white py-4 rounded-xl font-semibold text-lg"> Go Premium - $1,250 </a>
+      </div>
+     </div>
+    </div>
+   </section><!-- Case Studies Section -->
+   <section id="case-studies" class="py-20 px-6">
+    <div class="container mx-auto max-w-7xl">
+     <h2 class="heading-font text-5xl font-black text-gray-900 text-center mb-4">Real Results from Real Homeowners</h2>
+     <p class="text-xl text-gray-600 text-center mb-16 max-w-2xl mx-auto">See how much our customers saved by choosing GoSolo over traditional agents.</p>
+     <div class="grid md:grid-cols-3 gap-8"><!-- Case Study 1 -->
+      <div class="glass-card rounded-3xl overflow-hidden case-study-card">
+       <div class="overflow-hidden"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='grad1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23667eea;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23764ba2;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23grad1)'/%3E%3Cpath d='M0 240 L100 200 L200 220 L300 180 L400 200 L400 300 L0 300 Z' fill='rgba(255,255,255,0.2)'/%3E%3Crect x='50' y='80' width='100' height='120' rx='8' fill='rgba(255,255,255,0.3)'/%3E%3Crect x='180' y='100' width='80' height='100' rx='8' fill='rgba(255,255,255,0.3)'/%3E%3Crect x='280' y='120' width='70' height='80' rx='8' fill='rgba(255,255,255,0.3)'/%3E%3C/svg%3E" alt="Modern suburban home" class="w-full h-56 object-cover case-study-img">
+       </div>
+       <div class="p-6 space-y-4">
+        <div class="flex justify-between items-center"><span class="text-sm font-semibold text-purple-600">Austin, TX</span> <span class="text-sm text-gray-500">Closed in 18 days</span>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-900">Modern Suburban Home</h3>
+        <div class="grid grid-cols-2 gap-4">
+         <div>
+          <div class="text-sm text-gray-600">
+           Purchase Price
+          </div>
+          <div class="text-xl font-bold text-gray-900">
+           $425,000
+          </div>
+         </div>
+         <div>
+          <div class="text-sm text-gray-600">
+           Sold Price
+          </div>
+          <div class="text-xl font-bold text-green-600">
+           $432,000
+          </div>
+         </div>
+        </div>
+        <div class="pt-4 border-t border-gray-200">
+         <div class="text-sm text-gray-600 mb-1">
+          Traditional Commission
+         </div>
+         <div class="text-lg font-semibold text-red-600 line-through">
+          $25,920
+         </div>
+         <div class="text-sm text-gray-600 mt-2 mb-1">
+          GoSolo Cost
+         </div>
+         <div class="text-lg font-semibold text-purple-600">
+          $997
+         </div>
+         <div class="text-2xl font-black savings-highlight mt-2">
+          Saved $24,923
+         </div>
+        </div>
+       </div>
+      </div><!-- Case Study 2 -->
+      <div class="glass-card rounded-3xl overflow-hidden case-study-card">
+       <div class="overflow-hidden"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='grad2' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23f093fb;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23f5576c;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23grad2)'/%3E%3Cpath d='M0 220 L100 180 L200 200 L300 160 L400 180 L400 300 L0 300 Z' fill='rgba(255,255,255,0.2)'/%3E%3Crect x='80' y='70' width='120' height='140' rx='8' fill='rgba(255,255,255,0.3)'/%3E%3Crect x='220' y='90' width='100' height='120' rx='8' fill='rgba(255,255,255,0.3)'/%3E%3C/svg%3E" alt="Luxury downtown condo" class="w-full h-56 object-cover case-study-img">
+       </div>
+       <div class="p-6 space-y-4">
+        <div class="flex justify-between items-center"><span class="text-sm font-semibold text-purple-600">Seattle, WA</span> <span class="text-sm text-gray-500">Closed in 12 days</span>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-900">Luxury Downtown Condo</h3>
+        <div class="grid grid-cols-2 gap-4">
+         <div>
+          <div class="text-sm text-gray-600">
+           Purchase Price
+          </div>
+          <div class="text-xl font-bold text-gray-900">
+           $785,000
+          </div>
+         </div>
+         <div>
+          <div class="text-sm text-gray-600">
+           Sold Price
+          </div>
+          <div class="text-xl font-bold text-green-600">
+           $798,000
+          </div>
+         </div>
+        </div>
+        <div class="pt-4 border-t border-gray-200">
+         <div class="text-sm text-gray-600 mb-1">
+          Traditional Commission
+         </div>
+         <div class="text-lg font-semibold text-red-600 line-through">
+          $47,880
+         </div>
+         <div class="text-sm text-gray-600 mt-2 mb-1">
+          GoSolo Cost
+         </div>
+         <div class="text-lg font-semibold text-purple-600">
+          $1,250
+         </div>
+         <div class="text-2xl font-black savings-highlight mt-2">
+          Saved $46,630
+         </div>
+        </div>
+       </div>
+      </div><!-- Case Study 3 -->
+      <div class="glass-card rounded-3xl overflow-hidden case-study-card">
+       <div class="overflow-hidden"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='grad3' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%234facfe;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%2300f2fe;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23grad3)'/%3E%3Cpath d='M0 240 L100 200 L200 220 L300 180 L400 200 L400 300 L0 300 Z' fill='rgba(255,255,255,0.2)'/%3E%3Crect x='60' y='90' width='110' height='130' rx='8' fill='rgba(255,255,255,0.3)'/%3E%3Crect x='190' y='110' width='90' height='110' rx='8' fill='rgba(255,255,255,0.3)'/%3E%3Crect x='300' y='130' width='60' height='90' rx='8' fill='rgba(255,255,255,0.3)'/%3E%3C/svg%3E" alt="Family home with pool" class="w-full h-56 object-cover case-study-img">
+       </div>
+       <div class="p-6 space-y-4">
+        <div class="flex justify-between items-center"><span class="text-sm font-semibold text-purple-600">Phoenix, AZ</span> <span class="text-sm text-gray-500">Closed in 21 days</span>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-900">Family Home with Pool</h3>
+        <div class="grid grid-cols-2 gap-4">
+         <div>
+          <div class="text-sm text-gray-600">
+           Purchase Price
+          </div>
+          <div class="text-xl font-bold text-gray-900">
+           $550,000
+          </div>
+         </div>
+         <div>
+          <div class="text-sm text-gray-600">
+           Sold Price
+          </div>
+          <div class="text-xl font-bold text-green-600">
+           $565,000
+          </div>
+         </div>
+        </div>
+        <div class="pt-4 border-t border-gray-200">
+         <div class="text-sm text-gray-600 mb-1">
+          Traditional Commission
+         </div>
+         <div class="text-lg font-semibold text-red-600 line-through">
+          $33,900
+         </div>
+         <div class="text-sm text-gray-600 mt-2 mb-1">
+          GoSolo Cost
+         </div>
+         <div class="text-lg font-semibold text-purple-600">
+          $1,250
+         </div>
+         <div class="text-2xl font-black savings-highlight mt-2">
+          Saved $32,650
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- FAQ Section -->
+   <section id="faq" class="py-20 px-6">
+    <div class="container mx-auto max-w-4xl">
+     <h2 class="heading-font text-5xl font-black text-gray-900 text-center mb-4">Frequently Asked Questions</h2>
+     <p class="text-xl text-gray-600 text-center mb-16">Everything you need to know about selling with GoSolo</p>
+     <div class="space-y-4">
+      <div class="glass-card rounded-2xl overflow-hidden faq-item"><button class="w-full p-6 text-left flex justify-between items-center" onclick="toggleFAQ(this)"> <span class="text-lg font-semibold text-gray-900">How is this different from using a traditional agent?</span>
+        <svg class="w-6 h-6 text-gray-600 transform transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg></button>
+       <div class="faq-answer px-6 pb-6">
+        <p class="text-gray-700 leading-relaxed">Traditional agents charge 6% commission (typically 3% for the listing agent and 3% for the buyer's agent). With GoSolo, you pay a flat fee and get direct access to the same MLS system and tools agents use. You handle showings and negotiations, keeping thousands in your pocket.</p>
+       </div>
+      </div>
+      <div class="glass-card rounded-2xl overflow-hidden faq-item"><button class="w-full p-6 text-left flex justify-between items-center" onclick="toggleFAQ(this)"> <span class="text-lg font-semibold text-gray-900">Will my listing appear on Zillow and Realtor.com?</span>
+        <svg class="w-6 h-6 text-gray-600 transform transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg></button>
+       <div class="faq-answer px-6 pb-6">
+        <p class="text-gray-700 leading-relaxed">Absolutely! When we list your home on the MLS, it automatically syndicates to over 500 real estate websites including Zillow, Realtor.com, Trulia, and all major platforms. Your home gets the same exposure as any agent-listed property.</p>
+       </div>
+      </div>
+      <div class="glass-card rounded-2xl overflow-hidden faq-item"><button class="w-full p-6 text-left flex justify-between items-center" onclick="toggleFAQ(this)"> <span class="text-lg font-semibold text-gray-900">What if a buyer has an agent?</span>
+        <svg class="w-6 h-6 text-gray-600 transform transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg></button>
+       <div class="faq-answer px-6 pb-6">
+        <p class="text-gray-700 leading-relaxed">Most buyers will have their own agents, and that's perfectly fine! You typically offer to pay the buyer's agent commission (usually 2.5-3%) from the proceeds of the sale. This is still significantly less than paying both the listing and buyer's agent through traditional means.</p>
+       </div>
+      </div>
+      <div class="glass-card rounded-2xl overflow-hidden faq-item"><button class="w-full p-6 text-left flex justify-between items-center" onclick="toggleFAQ(this)"> <span class="text-lg font-semibold text-gray-900">Do you provide legal documents and contracts?</span>
+        <svg class="w-6 h-6 text-gray-600 transform transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg></button>
+       <div class="faq-answer px-6 pb-6">
+        <p class="text-gray-700 leading-relaxed">Yes! Our Gold package includes FSBO (For Sale By Owner) contract templates, buyer offer sheets, and all the essential documents you need. We recommend having a real estate attorney review the final purchase agreement, which typically costs $500-800—still a fraction of agent commissions.</p>
+       </div>
+      </div>
+      <div class="glass-card rounded-2xl overflow-hidden faq-item"><button class="w-full p-6 text-left flex justify-between items-center" onclick="toggleFAQ(this)"> <span class="text-lg font-semibold text-gray-900">How long does it take to get listed on the MLS?</span>
+        <svg class="w-6 h-6 text-gray-600 transform transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg></button>
+       <div class="faq-answer px-6 pb-6">
+        <p class="text-gray-700 leading-relaxed">With our Silver package, you'll be live on the MLS within 72 hours. Choose Gold and we'll have you listed within 24 hours. Once live, your listing begins syndicating to all major real estate platforms immediately.</p>
+       </div>
+      </div>
+      <div class="glass-card rounded-2xl overflow-hidden faq-item"><button class="w-full p-6 text-left flex justify-between items-center" onclick="toggleFAQ(this)"> <span class="text-lg font-semibold text-gray-900">What if my home doesn't sell in 6 months?</span>
+        <svg class="w-6 h-6 text-gray-600 transform transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg></button>
+       <div class="faq-answer px-6 pb-6">
+        <p class="text-gray-700 leading-relaxed">If your home hasn't sold after 6 months, you can renew your listing at a discounted rate. However, most homes listed with proper pricing and quality photos sell well within this timeframe. Our team provides pricing guidance to help ensure your home is competitively positioned.</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Final CTA Section -->
+   <section class="py-20 px-6">
+    <div class="container mx-auto max-w-5xl">
+     <div class="glass-card rounded-3xl p-12 md:p-16 text-center space-y-8">
+      <h2 class="heading-font text-5xl font-black text-gray-900">Ready to Keep Your Hard-Earned Equity?</h2>
+      <p class="text-xl text-gray-700 max-w-2xl mx-auto">Join thousands of smart homeowners who've saved an average of $24,000 by choosing GoSolo over traditional agents.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4"><a href="https://link.fastpaydirect.com/payment-link/68372b070263ae1d3777ccca" target="_blank" rel="noopener noreferrer" class="btn-primary text-white px-10 py-5 rounded-full font-semibold text-lg shadow-lg"> Start with Silver - $997 </a> <a href="https://link.fastpaydirect.com/payment-link/68372c100a5741d11652194a" target="_blank" rel="noopener noreferrer" class="btn-primary text-white px-10 py-5 rounded-full font-semibold text-lg shadow-lg"> Go Premium - $1,250 </a>
+      </div>
+     </div>
+    </div>
+   </section><!-- Footer -->
+   <footer class="py-12 px-6 bg-white/30">
+    <div class="container mx-auto max-w-7xl text-center">
+     <div class="heading-font text-3xl font-black text-gray-900 mb-4">
+      GoSolo Realty
+     </div>
+     <p class="text-gray-600 mb-6">Empowering homeowners to sell smarter and keep more profit.</p>
+     <p class="text-sm text-gray-500">© 2024 GoSolo Realty. All rights reserved.</p>
+    </div>
+   </footer>
+  </div>
+  <script>
+        const defaultConfig = {
+            hero_headline: "Fire Your Realtor.",
+            hero_subheadline: "Keep the Profit.",
+            hero_description: "Why the Tools Agents Use Matter More Than the Agents Themselves.",
+            about_title: "About GoSolo",
+            silver_title: "Silver Package",
+            gold_title: "Gold Package"
+        };
 
-    <script>
         // Calculator functionality
-        document.getElementById('homePrice').addEventListener('input', function() {
-            const price = parseFloat(this.value) || 500000;
-            const traditionalCost = price * 0.06;
-            const savings = traditionalCost - 997;
-            
-            document.getElementById('traditionalCost').textContent = '$' + traditionalCost.toLocaleString();
-            document.getElementById('savings').textContent = '$' + savings.toLocaleString();
-        });
+        const homePriceInput = document.getElementById('homePriceInput');
+        const traditionalCommission = document.getElementById('traditionalCommission');
+        const savingsAmount = document.getElementById('savingsAmount');
 
-        // Accordion functionality
-        function toggleAccordion(button) {
-            const content = button.nextElementSibling;
-            const icon = button.querySelector('.accordion-icon');
+        function updateCalculator() {
+            const homePrice = parseFloat(homePriceInput.value) || 0;
+            const commission = homePrice * 0.06;
+            const savings = commission - 997;
+
+            traditionalCommission.textContent = '$' + commission.toLocaleString('en-US', { maximumFractionDigits: 0 });
+            savingsAmount.textContent = '$' + savings.toLocaleString('en-US', { maximumFractionDigits: 0 });
             
-            if (content.classList.contains('active')) {
-                content.classList.remove('active');
-                icon.classList.remove('fa-minus');
-                icon.classList.add('fa-plus');
-                icon.style.transform = 'rotate(0deg)';
-            } else {
-                // Close all other accordions
-                document.querySelectorAll('.accordion-content').forEach(item => {
-                    item.classList.remove('active');
-                });
-                document.querySelectorAll('.accordion-icon').forEach(item => {
-                    item.classList.remove('fa-minus');
-                    item.classList.add('fa-plus');
-                    item.style.transform = 'rotate(0deg)';
-                });
-                
-                // Open clicked accordion
-                content.classList.add('active');
-                icon.classList.remove('fa-plus');
-                icon.classList.add('fa-minus');
+            savingsAmount.classList.remove('count-animation');
+            void savingsAmount.offsetWidth;
+            savingsAmount.classList.add('count-animation');
+        }
+
+        homePriceInput.addEventListener('input', updateCalculator);
+
+        // FAQ toggle
+        function toggleFAQ(button) {
+            const answer = button.nextElementSibling;
+            const icon = button.querySelector('svg');
+            const isOpen = answer.classList.contains('active');
+
+            document.querySelectorAll('.faq-answer').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelectorAll('.faq-item svg').forEach(svg => {
+                svg.style.transform = 'rotate(0deg)';
+            });
+
+            if (!isOpen) {
+                answer.classList.add('active');
                 icon.style.transform = 'rotate(180deg)';
             }
         }
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
+        // Scroll effect for navigation
+        let lastScroll = 0;
+        const nav = document.getElementById('mainNav');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                nav.classList.add('nav-scrolled');
+            } else {
+                nav.classList.remove('nav-scrolled');
+            }
+            
+            lastScroll = currentScroll;
         });
 
-        // Scroll reveal animation
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+        // Element SDK implementation
+        async function onConfigChange(config) {
+            document.getElementById('heroHeadline').textContent = config.hero_headline || defaultConfig.hero_headline;
+            document.getElementById('heroSubheadline').textContent = config.hero_subheadline || defaultConfig.hero_subheadline;
+            document.getElementById('heroDescription').textContent = config.hero_description || defaultConfig.hero_description;
+            document.getElementById('aboutTitle').textContent = config.about_title || defaultConfig.about_title;
+            document.getElementById('silverTitle').textContent = config.silver_title || defaultConfig.silver_title;
+            document.getElementById('goldTitle').textContent = config.gold_title || defaultConfig.gold_title;
+        }
 
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('revealed');
-                }
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["hero_headline", config.hero_headline || defaultConfig.hero_headline],
+                ["hero_subheadline", config.hero_subheadline || defaultConfig.hero_subheadline],
+                ["hero_description", config.hero_description || defaultConfig.hero_description],
+                ["about_title", config.about_title || defaultConfig.about_title],
+                ["silver_title", config.silver_title || defaultConfig.silver_title],
+                ["gold_title", config.gold_title || defaultConfig.gold_title]
+            ]);
+        }
+
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities: () => ({
+                    recolorables: [],
+                    borderables: [],
+                    fontEditable: undefined,
+                    fontSizeable: undefined
+                }),
+                mapToEditPanelValues
             });
-        }, observerOptions);
-
-        document.querySelectorAll('.scroll-reveal').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Initialize calculator with default value
-        document.getElementById('homePrice').dispatchEvent(new Event('input'));
+        }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'957f01b814d30ca2',t:'MTc1MTMwMDU5MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-<script 
-  src="https://widgets.leadconnectorhq.com/loader.js"  
-  data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" 
- data-widget-id="6862c0cfb6046288dc4d10a6"   > 
- </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b872cb76387c93b',t:'MTc2NzQ5MjM2Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
